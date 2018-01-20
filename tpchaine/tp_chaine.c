@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     char s[MAXCHAR] = "ta marine va tenir" ;
 
     // question 3
-printf("Question 3 : %s\n", s) ;
+    printf("Question 3 : %s\n", s) ;
 
     // question 4
     s[0] = 'l' ;
@@ -117,49 +117,34 @@ printf("Question 3 : %s\n", s) ;
 
     // question 21
     char a_dechiff[] = "zfwruwuovgvauulrogfbuybpqsevdvuuwr" ;
-    char mot[]="sparla" ;
-    //defi(a_dechiff, 6, mot);
-    printf("Fin questions\n");
+    char mot[] = "sparla" ;
+    defi(a_dechiff, 6, mot) ;
+    printf("Fin questions\n") ;
     //zfwruwuovgvauulrogfbuybpsevdvuuwr
 
-    /*printf("|||  %c ", abs('s'-'g')+97 );
-    printf("|||  %c ", abs('p'-'f')+97 );
-    printf("|||  %c ", abs('a'-'b')+97 );
-    printf("|||  %c ", abs('r'-'u')+97 );
-    printf("|||  %c ", abs('l'-'y')+97 );
-    printf("|||  %c ", abs('a'-'b')+97 );*/
-    //chiffrement_de_vigenere(a_dechiff, "mkbdnb", 0);
-    //printf("Question 21 : dechiffrement : %s\n", a_dechiff) ;
-    //chiffrement_de_vigenere(a_dechiff, "mkbdnb", 1);
-    //printf("Question 21 : chiffrement : %s\n", a_dechiff) ;
-    char v = 's';
-    char p = 'z';
-    char f = 'p';
-    char a = 'a';
-    printf("%d : %c\n", a, a);
-    printf("%d : %c\n", v, v);
-    printf("%d : %c\n", p, p);
-//    printf("%d : %c\n", 'f', 'f');
-  //  char decal = decalchar('r', 7);
-    printf("%c, %d", decalchar(97,decalchar('s', -122)), decalchar(97,decalchar('s', -122)));
-    //
-    //
     //
     return 0 ;
-}
+    }
 
-// DEFINITION DES FONCTIONS
+
+
+
+/****************************/
+/*                          */
+/*                          */
+/* DEFINITION DES FONCTIONS */
+/*                          */
+/*                          */
+/****************************/
+
+
 
 // question 11
 // renvoie la longueur de la chaine s
 int mylen(char *s)
     {
     int compteur = 0 ;
-    while (*s != '\0')
-        {
-        s++ ;
-        compteur++ ;
-        }
+    for ( ; *s != '\0'; s++, compteur++) ;
     return compteur ;
     }
 
@@ -273,9 +258,9 @@ void chiffrement_de_vigenere(char *s, char *cle, int crypt_decrypt)
             i = 0 ;
             }
         if (crypt_decrypt)
-            *s = decalchar(*s, (*cle - 96)) ;
+            *s = decalchar(*s, (*cle - 96)) ;// 96 pour la question 20
         else
-            *s = decalchar(*s, -(*cle - 96)) ;
+            *s = decalchar(*s, -(*cle - 96)) ;// 96 pour la question 20
         }
     }
 
@@ -283,55 +268,35 @@ void chiffrement_de_vigenere(char *s, char *cle, int crypt_decrypt)
 // dechiffrement de zfwruwuovgvauulrogfbuybpqsevdvuuwr
 void defi(char *s, int longueur, char *mot)
     {
-    /*int i, decal ;
-    char sh ;
-    strcpy(sh, s);
-    char clee[longueur] ;
-    int in, indi, j ;
-    for (j = 0 ; s[j] != '\0' ; j++ )
-        {
-        for (i=0,in=0,j_bis=j;s[j] != '\0' && i != longueur ; i++,in++,j_bis++)
-            // on créé une clee, à partir de sparla
-            {
-            decal = abs( mot[in]-s[j_bis] ) + 97;
-            // différence de sparla et du mot à décrypt (lettre par lettre)
-            clee[i] = decal ;
-            }
-        //clee[1] += 6 ;
-        chiffrement_de_vigenere(sh, clee, 0) ;
-        printf("phrase : %s\tclee : %s\n", sh, clee);
-        chiffrement_de_vigenere(sh, clee, 1) ;
-        }
-    */
-    int i, decal ;
+    // a = 97
+    // z = 122
+    int i ;
     char *sh = s ;
     char *debut = s+0 ;
     char clee[longueur] ;
     char *debutmot = mot+0 ;
     for ( ; *s != '\0' ; s = debut, mot = debutmot)
         {
-        printf("lettre : %c\n", *s);
+        //printf("lettre : %c\n", *s);
         for (i = 0 ; *s != '\0' && i != longueur ; i++, s++, mot++)
             {
-            //if (*mot > *s)
-                //decal = decalchar(*mot, -(*s));
-            //else
-            //decal = decalchar(*s, -(*mot));
-            /*if (*mot > *s)
-                clee[i] = decalchar(*mot-*s, 96) ;
+            //clee[i]=decalchar(decalchar(*s, -(decalchar(*mot, 96)) ), 97);deg
+            //clee[i]=decalchar(decalchar(*s, -(*mot)), 97);// joli
+            //clee[i]=decalchar(*s, -(*mot))+97;// ne marche pas
+            //plutôt joli
+            //
+            if (*s > *mot)
+                clee[i] = (*s-(*mot)) + 96 ;
+            else if (*s == *mot)
+                clee[i] = 'z' ;
             else
-                clee[i] = decalchar(*s-*mot, 96) ;*/
-            //clee[i] = abs(decalchar(*mot-*s, -97)) ;
-            //clee[i]=decalchar(96+abs(decalchar(*mot, 96)-decalchar(*s, 96)),96);
-            //clee[i] = abs(*s - *mot) +97;//pas 96 !!!
-            clee[i] = decalchar(97,-decalchar(*mot, -(*s)));
-            //clee[i] = decalchar(decal, 97);
+                clee[i] = (122 - (*mot)) + (*s-97) + 97 ;
+
             //printf("%d|", clee[i]);
             }
         chiffrement_de_vigenere(sh, clee, 0) ;
-        printf("phrase probable : %s\tclee problable : %s\n", sh, clee);
+        printf("phrase : %s\tclee : %s\n", sh, clee);
         chiffrement_de_vigenere(sh, clee, 1) ;
-        //printf("phrase : %s\n\n", sh);
         debut++ ;
         }
     }
