@@ -187,7 +187,6 @@ void remplace_char(char *s, char c1, char c2)
         if (*s == c1)
             *s = c2 ;
     }
-//
 
 // question 15
 // renvoie un pointeur sur la premiere occurence du char c dans s
@@ -268,31 +267,27 @@ void chiffrement_de_vigenere(char *s, char *cle, int crypt_decrypt)
 // dechiffrement de zfwruwuovgvauulrogfbuybpqsevdvuuwr
 void defi(char *s, int longueur, char *mot)
     {
-    // a = 97
-    // z = 122
-    int i ;
-    char *sh = s ;
-    char *debut = s+0 ;
-    char clee[longueur] ;
-    char *debutmot = mot+0 ;
-    for ( ; *s != '\0' ; s = debut, mot = debutmot)
+    int i, j, compteur = 0 ;
+    char *sh = s, stock, *debut = s+0, clee[longueur], *debutmot = mot+0 ;
+    for ( ; *s != '\0' ; s = debut, mot = debutmot, compteur++)
         {
-        //printf("lettre : %c\n", *s);
+        if (compteur == 6)
+            compteur = 0;
         for (i = 0 ; *s != '\0' && i != longueur ; i++, s++, mot++)
             {
-            //clee[i]=decalchar(decalchar(*s, -(decalchar(*mot, 96)) ), 97);deg
-            //clee[i]=decalchar(decalchar(*s, -(*mot)), 97);// joli
-            //clee[i]=decalchar(*s, -(*mot))+97;// ne marche pas
-            //plutôt joli
-            //
             if (*s > *mot)
                 clee[i] = (*s-(*mot)) + 96 ;
             else if (*s == *mot)
                 clee[i] = 'z' ;
             else
                 clee[i] = (122 - (*mot)) + (*s-97) + 97 ;
-
-            //printf("%d|", clee[i]);
+            }
+        for (i = 0 ; i != compteur ; i++)
+            {
+            stock = clee[strlen(clee) - 1] ;
+            for (j = strlen(clee) - 1 ; j != 0 ; j--)
+                clee[j] = clee[j-1] ;
+            clee[0] = stock ;
             }
         chiffrement_de_vigenere(sh, clee, 0) ;
         printf("phrase : %s\tclee : %s\n", sh, clee);
