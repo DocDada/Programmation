@@ -5,7 +5,14 @@
 #define MAXCHAR 100
 
 
-// DECLARATION DES FONCTIONS
+/***********************/
+/*                     */
+/*     DECLARATION     */
+/*    DES FONCTIONS    */
+/*                     */
+/***********************/
+
+
 int mylen(char *s) ;
 void reverse(char *s) ;
 char* dernier_char(char *s) ;
@@ -20,7 +27,13 @@ void chiffrement_de_vigenere(char *s, char *cle, int crypt_decrypt) ;
 void defi(char *s, int longueur, char *mot) ;
 
 
-// MAIN
+
+/*******************/
+/*                 */
+/*      MAIN       */
+/*                 */
+/*******************/
+
 int main(int argc, char *argv[])
     {
     system("clear");
@@ -118,10 +131,10 @@ int main(int argc, char *argv[])
     // question 21
     char a_dechiff[] = "zfwruwuovgvauulrogfbuybpqsevdvuuwr" ;
     char mot[] = "sparla" ;
-    defi(a_dechiff, 6, mot) ;
+    defi(a_dechiff, strlen(mot), mot) ;
     printf("Fin questions\n") ;
-    //zfwruwuovgvauulrogfbuybpsevdvuuwr
-
+    // zfwruwuovgvauulrogfbuybpqsevdvuuwr
+    // jetetienstumetiensparlabarbichette : pacman
     //
     return 0 ;
     }
@@ -271,7 +284,7 @@ void defi(char *s, int longueur, char *mot)
     char *sh = s, stock, *debut = s+0, clee[longueur], *debutmot = mot+0 ;
     for ( ; *s != '\0' ; s = debut, mot = debutmot, compteur++)
         {
-        if (compteur == 6)
+        if (compteur == longueur)
             compteur = 0;
         for (i = 0 ; *s != '\0' && i != longueur ; i++, s++, mot++)
             {
@@ -295,10 +308,5 @@ void defi(char *s, int longueur, char *mot)
         debut++ ;
         }
     }
-
-
-
-
-
 
 // FIN DU TP CHAINE
