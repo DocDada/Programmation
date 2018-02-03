@@ -53,17 +53,50 @@ set smartcase		" Do smart case matching
 set mouse=a		" Enable mouse usage (all modes)
 set nocompatible
 set number
+set relativenumber
 "set autoindent
 set list " affiche caracteres invisibles
 set wildmenu
 set visualbell
 set cmdheight=2
 set prompt
-set expandtab " change tabulations en espaces
 set lazyredraw
 :let g:load_doxygen_syntax=1
 
-" Highlight Tabs and Spaces
+
+" Mappings {{{
+noremap - ddp
+" inverse la ligne actuelle avec la ligne en dessous
+noremap _ ddP
+" inverse la ligne actuelle avec la ligne au dessus
+inoremap <c-u> <esc>viwU<esc>i
+" selectionne le mot et le met en majuscule (mode insertion)
+noremap <c-u> viwU<esc>
+" selectionne le mot et le met en majuscule (mode normal)
+" }}}
+
+" Abbreviations {{{
+iabbrev adn and
+iabbrev inc #include<>
+iabbrev Sys System.out.println();
+" }}}
+
+
+" statusline
+" donne le chemin, le type de fichier, la ligne actuelle et le nombre
+" total de lignes du fichier
+set statusline=\ Path\ :\ %-4F\ Filetype\ :\ %-4y\ %l/%L
+
+" Foldmethod {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+
+
+" Highlight Tabs and Spaces {{{
 :highlight Tab ctermbg=darkgray guibg=darkgray
 :highlight Space ctermbg=darkblue guibg=darkblue
 :au BufWinEnter * let w:m2=matchadd('Tab', '\t', -1)
@@ -79,8 +112,22 @@ set  tabstop =4 "longueur d'une tabulation
 set  softtabstop =4
 set shiftwidth=4 "par défaut = 8
 set smarttab
+set expandtab " change tabulations en espaces
+" }}}
+
 
 if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
 
+autocmd VimEnter * echo ">^.^<"
+
+" Fonctions {{{
+function FlipTheTable()
+    echom "(╯°□°）╯︵ ┻━┻"
+endfunction
+
+function No()
+    echom "(」ﾟﾛﾟ)｣NOOOooooo━"
+endfunction
+" }}}
