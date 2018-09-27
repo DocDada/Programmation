@@ -6,24 +6,51 @@ int test_dim(int c, int l, int c2, int l2);
 void input_dim(int* c, int* l);
 void input_contents(int tab[T_MAX][T_MAX], int c, int l);
 void pre_print_matrix(int tab[T_MAX][T_MAX], int c, int l);
-void sum_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2);
+int sum_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2);
 int mult_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2);
-void pre_print_mult(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2, int c3, int l3);
+void pre_print(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2, int c3, int l3);
 
 int main(void)
 {
-    int mat1[T_MAX][T_MAX] = {{0}}, mat2[T_MAX][T_MAX] = {{0}}, mat3[T_MAX][T_MAX] = {{0}}, c1, c2, l1, l2;
+    char s;
+    int mat1[T_MAX][T_MAX] = {{0}}, mat2[T_MAX][T_MAX] = {{0}}, mat3[T_MAX][T_MAX] = {{0}};
+    int c1, c2, l1, l2, erreur = 1;
+
+    // On entre les dimensions des matrices
     input_dim(&c1, &l1);
-    //input_dim(&c2, &l2);
+    input_dim(&c2, &l2);
+
+    // on entre le contenu des matrices
     input_contents(mat1, c1, l1);
-    //input_contents(mat2, c2, l2);
-    pre_print_matrix(mat1, c1, l1);
-    /*pre_print_matrix(mat2, c2, l2);
-    sum_matrix(mat1, mat2, mat3, c1, l1, c2, l2);
-    pre_print_matrix(mat3, c2, l2);*/
-    mult_matrix(mat1, mat1, mat3, c1, l1, c1, l1);
-    pre_print_matrix(mat3, c1, l1);
-    pre_print_mult(mat1, mat1, mat3, c1, l1, c1, l1, c1, l1);
+    input_contents(mat2, c2, l2);
+
+
+
+    // on demande a l'utilisateur s'il veut faire la somme ou le produit
+    // de 2 matrices
+    do
+    {
+        puts("Somme ou produit ? S/s/P/p : ");
+        scanf(" %c", &s);
+    } while (s != 's' && s != 'S' && s != 'P' && s != 'p');
+
+    switch (s)
+    {
+        case 'S': case 's':
+            erreur = sum_matrix(mat1, mat2, mat3, c1, l1, c2, l2);
+            puts("\nSomme matricielle :");
+            break;
+        case 'P': case 'p':
+            erreur = mult_matrix(mat1, mat2, mat3, c1, l1, c1, l1);
+            puts("\nProduit matriciel :");
+        default:
+            break;
+    }
+
+    if (erreur != 0)// si le produit ou la somme est possible, on affiche
+    {
+        pre_print(mat1, mat2, mat3, c1, l1, c2, l2, c2, l1);// avec beaute
+    }
     return 0;
 }
 
@@ -82,17 +109,17 @@ void pre_print_matrix(int tab[T_MAX][T_MAX], int c, int l)
         }
         printf("|\n");
     }
-    
+
     printf("--");
     for (i = 0; i < (c*2 + c%1); i++)
         printf(" ");
     puts("--");
 }
 
-void sum_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2)
+int sum_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2)
 {
     if (test_dim(c, l, c2, l2) == 0)
-        return;
+        return 0;
     int i, j;
     for (i = 0; i != l; i++)
     {
@@ -101,12 +128,16 @@ void sum_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX],
             t3[i][j] = t[i][j] + t2[i][j];
         }
     }
+    return 1;
 }
 
 int mult_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2)
 {
     if (c != l2)
+    {
+        puts("Le produit matriciel n'est pas possible.");
         return 0;// error
+    }
     int i, j, aij = 0, z;
     for (i = 0; i < l; i++)
     {
@@ -123,7 +154,7 @@ int mult_matrix(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX],
     return 1;
 }
 
-void pre_print_mult(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2, int c3, int l3)
+void pre_print(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_MAX], int c, int l, int c2, int l2, int c3, int l3)
 {
     int i, j, e;
     for (e = 0; e != (c*2 + c%1 + 6); e++)
@@ -152,20 +183,20 @@ void pre_print_mult(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_M
     for (i = 0; i < (c2*2 + c2%1); i++)
         printf(" ");
     puts("--");
-    
-    
-    
-    
+
+
+
+
     printf("--");
     for (i = 0; i < (c*2 + c%1); i++)
         printf(" ");
     printf("--  ");
-    
+
     printf("--");
     for (i = 0; i < (c3*2 + c3%1); i++)
         printf(" ");
     puts("--");
-    
+
     for (i = 0; i != l; i++)
     {
         printf("|");
@@ -177,7 +208,7 @@ void pre_print_mult(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_M
                 printf("%2d", t[i][j]);
         }
         printf("|  ");
-        
+
         printf("|");
         for (j = 0; j != c3; j++)
         {
@@ -188,12 +219,12 @@ void pre_print_mult(int t[T_MAX][T_MAX], int t2[T_MAX][T_MAX], int t3[T_MAX][T_M
         }
         printf("|\n");
     }
-    
+
     printf("--");
     for (i = 0; i < (c*2 + c%1); i++)
         printf(" ");
     printf("--  ");
-    
+
     printf("--");
     for (i = 0; i < (c3*2 + c3%1); i++)
         printf(" ");

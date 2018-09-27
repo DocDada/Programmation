@@ -27,6 +27,6 @@ int main(void) {
         for (m = 0;m!=31;m++)
             printf("..");
     }
-
+    printf("\n");
     return 0;
 }
