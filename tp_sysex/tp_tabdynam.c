@@ -1,16 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-/********************/
-/*    PROTOTYPES    */
-/*       DES        */
-/*    FONCTIONS     */
-/********************/
+
+/*****************************/
+/*        PROTOTYPES         */
+/*            DES            */
+/*         FONCTIONS         */
+/*****************************/
 
 int input_array_size();
 void input_array_size_v2(int * size);
 int * alloc_1D_array(int size);
-void alloc_1D_array_v2(int * array, int size);
+void alloc_1D_array_v2(int ** array, int size);
 void fill_array(int * array, int size);
 void display_array(int * array, int size);
 void free_array(int * array);
@@ -18,32 +19,31 @@ void free_array(int * array);
 
 
 
-int main()
+int main(int argc, char* argv[])
 {
     /*
     int size = input_array_size();
     printf("TAILLE : %d\n", size);
     int * tab = alloc_1D_array(size);
     */
-    int * size = NULL;
-    input_array_size_v2(size);
-    printf("TAILLE : %d\n", *size);
+    int size;
+    input_array_size_v2(&size);
+    printf("TAILLE : %d\n", size);
     int * tab = NULL;
-    alloc_1D_array_v2(tab, *size);
-    fill_array(tab, *size);
-    display_array(tab, *size);
+    alloc_1D_array_v2(&tab, size);
+    fill_array(tab, size);
+    display_array(tab, size);
     free_array(tab);
     return 0;
 }
 
 
 
-/********************/
-/*    DEFINITIONS   */
-/*       DES        */
-/*    FONCTIONS     */
-/********************/
-
+/*****************************/
+/*        DEFINITIONS        */
+/*            DES            */
+/*         FONCTIONS         */
+/*****************************/
 
 /*****************************/
 /* input_array_size          */
@@ -76,7 +76,7 @@ void input_array_size_v2(int * size)
     {
         puts("Enter size of array : ");
         scanf(" %d", size);
-    } while (size <= 0);
+    } while (*size <= 0);
 }
 
 /*****************************/
@@ -98,9 +98,9 @@ int * alloc_1D_array(int size)
 /*                           */
 /* return : void             */
 /*****************************/
-void alloc_1D_array_v2(int * array, int size)
+void alloc_1D_array_v2(int ** array, int size)
 {
-    array = (int *) malloc(size * sizeof(int));
+    *array = (int *) malloc(size * sizeof(int));
 }
 
 /*****************************/
@@ -112,16 +112,22 @@ void alloc_1D_array_v2(int * array, int size)
 /*****************************/
 void fill_array(int * array, int size)
 {
-    int i, input;
+    int i;
     for (i = 0; i < size; i++)
     {
         printf("Element %d : ", i);
-        scanf(" %d", &input);
-        *(array + i) = input;
+        scanf(" %d", &array[i]);
     }
 }
 
 
+/*****************************/
+/* display_array             */
+/*                           */
+/* display the elements of   */
+/* the array                 */
+/* return : void             */
+/*****************************/
 void display_array(int * array, int size)
 {
     int i;
@@ -133,6 +139,13 @@ void display_array(int * array, int size)
     printf(";\n");
 }
 
+/*****************************/
+/* free_array                */
+/*                           */
+/* free the array            */
+/*                           */
+/* return : void             */
+/*****************************/
 void free_array(int * array)
 {
     free(array);
