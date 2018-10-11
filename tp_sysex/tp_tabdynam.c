@@ -20,11 +20,18 @@ void free_array(int * array);
 
 int main()
 {
+    /*
     int size = input_array_size();
     printf("TAILLE : %d\n", size);
     int * tab = alloc_1D_array(size);
-    fill_array(tab, size);
-    display_array(tab, size);
+    */
+    int * size = NULL;
+    input_array_size_v2(size);
+    printf("TAILLE : %d\n", *size);
+    int * tab = NULL;
+    alloc_1D_array_v2(tab, *size);
+    fill_array(tab, *size);
+    display_array(tab, *size);
     free_array(tab);
     return 0;
 }
