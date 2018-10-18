@@ -306,5 +306,6 @@ void free_2D_array(int ** array, int dimension[2])
     {
         free_array(array[ligne]);// on desalloue chaque ligne
     }
+    free(array);
 }
 
