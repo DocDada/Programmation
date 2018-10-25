@@ -11,22 +11,22 @@
 
 // TABLEAU 1D
 void test_array_1D();
-int input_array_size();
-void input_array_size_v2(int * size);
-int * alloc_1D_array(int size);
-void alloc_1D_array_v2(int ** array, int size);
-void fill_array(int * array, int size);
-void display_array(int * array, int size);
+unsigned int input_array_size();
+void input_array_size_v2(unsigned int * size);
+int * alloc_1D_array(unsigned int size);
+void alloc_1D_array_v2(int ** array, unsigned int size);
+void fill_array(int * array, unsigned int size);
+void display_array(int * array, unsigned int size);
 void free_array(int * array);
 
 // TABLEAU 2D
 void test_array_2D();
-void input_array_dimension(int dimension[2]);
-int ** alloc_2D_array(int dimension[2]);
-void alloc_2D_array_v2(int *** array, int dimension[2]);
-void fill_2D_array(int ** array, int dimension[2]);
-void display_2D_array(int ** array, int dimension[2]);
-void free_2D_array(int ** array, int dimension[2]);
+void input_array_dimension(unsigned int dimension[2]);
+int ** alloc_2D_array(unsigned int dimension[2]);
+void alloc_2D_array_v2(int *** array, unsigned int dimension[2]);
+void fill_2D_array(int ** array, unsigned int dimension[2]);
+void display_2D_array(int ** array, unsigned int dimension[2]);
+void free_2D_array(int ** array, unsigned int row);
 
 
 
@@ -53,11 +53,11 @@ int main(int argc, char* argv[])
 void test_array_1D()
 {
     /*
-    int size = input_array_size();
+    unsigned int size = input_array_size();
     printf("TAILLE : %d\n", size);
     int * tab = alloc_1D_array(size);
     */
-    int size;
+    unsigned int size;
     int * tab = NULL;
     input_array_size_v2(&size);
     printf("TAILLE : %d\n", size);
@@ -69,7 +69,7 @@ void test_array_1D()
 
 void test_array_2D()
 {
-    int dimension[2];
+    unsigned int dimension[2];
     int ** array = NULL;
     input_array_dimension(dimension);
     printf("ROW : %d\tCOLUMN : %d\n", dimension[0], dimension[1]);
@@ -77,7 +77,7 @@ void test_array_2D()
     alloc_2D_array_v2(&array, dimension);
     fill_2D_array(array, dimension);
     display_2D_array(array, dimension);
-    free_2D_array(array, dimension);
+    free_2D_array(array, dimension[0]);
 }
 
 
@@ -92,11 +92,11 @@ void test_array_2D()
 /*                           */
 /* the user enter the size   */
 /* of the array              */
-/* return : int              */
+/* return : unsigned int     */
 /*****************************/
-int input_array_size()
+unsigned int input_array_size()
 {
-    int size;
+    unsigned int size;
     do
     {
         puts("Enter size of array : ");
@@ -112,7 +112,7 @@ int input_array_size()
 /* of the array              */
 /* return : void             */
 /*****************************/
-void input_array_size_v2(int * size)
+void input_array_size_v2(unsigned int * size)
 {
     do
     {
@@ -126,9 +126,9 @@ void input_array_size_v2(int * size)
 /*                           */
 /* allocation of an array    */
 /*                           */
-/* return : int *            */
+/* return : unsigned int *   */
 /*****************************/
-int * alloc_1D_array(int size)
+int * alloc_1D_array(unsigned int size)
 {
     return (int *) malloc(size * sizeof(int));
 }
@@ -140,7 +140,7 @@ int * alloc_1D_array(int size)
 /*                           */
 /* return : void             */
 /*****************************/
-void alloc_1D_array_v2(int ** array, int size)
+void alloc_1D_array_v2(int ** array, unsigned int size)
 {
     *array = (int *) malloc(size * sizeof(int));
 }
@@ -152,7 +152,7 @@ void alloc_1D_array_v2(int ** array, int size)
 /* elements of the array     */
 /* return : void             */
 /*****************************/
-void fill_array(int * array, int size)
+void fill_array(int * array, unsigned int size)
 {
     int i;
     for (i = 0; i < size; i++)
@@ -170,7 +170,7 @@ void fill_array(int * array, int size)
 /* the array                 */
 /* return : void             */
 /*****************************/
-void display_array(int * array, int size)
+void display_array(int * array, unsigned int size)
 {
     int i;
     puts("Elements of array :");
@@ -211,7 +211,7 @@ void free_array(int * array)
 /* (row and column)          */
 /* return : void             */
 /*****************************/
-void input_array_dimension(int dimension[2])
+void input_array_dimension(unsigned int dimension[2])
 {
     puts("Entrez le nombre de lignes de votre tableau 2D");
     input_array_size_v2(&dimension[0]);
@@ -226,7 +226,7 @@ void input_array_dimension(int dimension[2])
 /*                           */
 /* return : int **           */
 /*****************************/
-int ** alloc_2D_array(int dimension[2])
+int ** alloc_2D_array(unsigned int dimension[2])
 {
     int ligne;
     int ** array = (int **) malloc(dimension[0] * sizeof(int *));
@@ -244,7 +244,7 @@ int ** alloc_2D_array(int dimension[2])
 /*                           */
 /* return : void             */
 /*****************************/
-void alloc_2D_array_v2(int *** array, int dimension[2])
+void alloc_2D_array_v2(int *** array, unsigned int dimension[2])
 {
     int ligne;
     *array = (int **) malloc(dimension[0] * sizeof(int *));// tableau de pointeurs
@@ -263,7 +263,7 @@ void alloc_2D_array_v2(int *** array, int dimension[2])
 /*                           */
 /* return : void             */
 /*****************************/
-void fill_2D_array(int ** array, int dimension[2])
+void fill_2D_array(int ** array, unsigned int dimension[2])
 {
     int ligne;
     for (ligne = 0; ligne < dimension[0]; ligne++)
@@ -281,7 +281,7 @@ void fill_2D_array(int ** array, int dimension[2])
 /*                           */
 /* return : void             */
 /*****************************/
-void display_2D_array(int ** array, int dimension[2])
+void display_2D_array(int ** array, unsigned int dimension[2])
 {
     int ligne;
     for (ligne = 0; ligne < dimension[0]; ligne++)
@@ -299,10 +299,10 @@ void display_2D_array(int ** array, int dimension[2])
 /*                           */
 /* return : void             */
 /*****************************/
-void free_2D_array(int ** array, int dimension[2])
+void free_2D_array(int ** array, unsigned int row)
 {
     int ligne;
-    for (ligne = 0; ligne < dimension[0]; ligne++)
+    for (ligne = 0; ligne < row; ligne++)
     {
         free_array(array[ligne]);// on desalloue chaque ligne
     }
