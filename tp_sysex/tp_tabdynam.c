@@ -173,12 +173,11 @@ void fill_array(int * array, unsigned int size)
 void display_array(int * array, unsigned int size)
 {
     int i;
-    puts("Elements of array :");
     for (i = 0; i < size; i++)
     {
-        printf("%d, ", *(array + i));
+        printf("[%d] %d ", i, *(array + i));
     }
-    printf(";\n");
+    printf("\n");
 }
 
 /*****************************/
@@ -286,7 +285,7 @@ void display_2D_array(int ** array, unsigned int dimension[2])
     int ligne;
     for (ligne = 0; ligne < dimension[0]; ligne++)
     {
-        printf("ROW %d : ", ligne);
+        printf("Array[%d] : ", ligne);
         display_array(array[ligne], dimension[1]);// on affiche chaque ligne
     }
 }
